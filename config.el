@@ -11,14 +11,14 @@
 
 ;; variables
 
-(defvar typescript-fmt-on-save nil
+(defvar ts-fmt-on-save nil
   "Run formatter on buffer save.")
 
-(defvar typescript-fmt-tool 'tide
+(defvar ts-fmt-tool 'tide
   "The name of the tool to be used for TypeScript source code formatting.
-Currently avaliable 'tide (default), 'typescript-formatter and 'prettier.")
+Currently avaliable 'tide (default), 'ts-formatter and 'prettier.")
 
-(defvar typescript-backend 'tide
+(defvar ts-backend 'tide
   "The backend to use for IDE features. Possible values are `tide'
 +and `lsp'.")
 

@@ -46,7 +46,7 @@ If you need formatting on save:
 #+BEGIN_SRC emacs-lisp
   (setq-default dotspacemacs-configuration-layers '(
     (typescript :variables
-                typescript-fmt-on-save t)))
+                ts-fmt-on-save t)))
 #+END_SRC
 
 You can choose formatting tool:
@@ -54,7 +54,7 @@ You can choose formatting tool:
 #+BEGIN_SRC emacs-lisp
   (setq-default dotspacemacs-configuration-layers '(
     (typescript :variables
-                typescript-fmt-tool 'typescript-formatter)))
+                ts-fmt-tool 'ts-formatter)))
 #+END_SRC
 
 Default is ='tide=.
@@ -68,21 +68,21 @@ If you want linting run:
   npm install -g typescript tslint
 #+END_SRC
 
-If you want to use typescript-formatter for formatting run:
+If you want to use ts-formatter for formatting run:
 
 #+BEGIN_SRC shell
-  npm install -g typescript-formatter
+  npm install -g ts-formatter
 #+END_SRC
 
 For best results, make sure that the =auto-completion= (company) and =html=
 layers are enabled.
 
 ** Choosing a backend
-To choose a default backend set the layer variable =typescript-backend=:
+To choose a default backend set the layer variable =ts-backend=:
 
 #+BEGIN_SRC elisp
   (setq-default dotspacemacs-configuration-layers '(
-    (typescript :variables typescript-backend 'tide)))
+    (typescript :variables ts-backend 'tide)))
 #+END_SRC
 
 Backend can be chosen on a per project basis using directory local variables
@@ -93,7 +93,7 @@ Backend can be chosen on a per project basis using directory local variables
   ;;; Directory Local Variables
   ;;; For more information see (info "(emacs) Directory Variables")
 
-  ((typescript-mode (typescript-backend . lsp)))
+  ((typescript-mode (ts-backend . lsp)))
 #+END_SRC
 
 *Note:* you can easily add a directory local variable with ~SPC f v d~.

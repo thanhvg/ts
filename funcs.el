@@ -12,28 +12,28 @@
 
 ;; backend
 
-(defun spacemacs//typescript-setup-backend ()
+(defun spacemacs//ts-setup-backend ()
   "Conditionally setup typescript backend."
-  (pcase typescript-backend
-    (`tide (spacemacs//typescript-setup-tide))
-    (`lsp (spacemacs//typescript-setup-lsp))))
+  (pcase ts-backend
+    (`tide (spacemacs//ts-setup-tide))
+    (`lsp (spacemacs//ts-setup-lsp))))
 
-(defun spacemacs//typescript-setup-company ()
+(defun spacemacs//ts-setup-company ()
   "Conditionally setup company based on backend."
-  (pcase typescript-backend
-    (`tide (spacemacs//typescript-setup-tide-company))
-    (`lsp (spacemacs//typescript-setup-lsp-company))))
+  (pcase ts-backend
+    (`tide (spacemacs//ts-setup-tide-company))
+    (`lsp (spacemacs//ts-setup-lsp-company))))
 
-(defun spacemacs//typescript-setup-eldoc ()
+(defun spacemacs//ts-setup-eldoc ()
   "Conditionally setup eldoc based on backend."
-  (pcase typescript-backend
-    (`tide (spacemacs//typescript-setup-tide-eldoc))
-    (`lsp (spacemacs//typescript-setup-lsp-eldoc))))
+  (pcase ts-backend
+    (`tide (spacemacs//ts-setup-tide-eldoc))
+    (`lsp (spacemacs//ts-setup-lsp-eldoc))))
 
 
 ;; tide
 
-(defun spacemacs//typescript-setup-tide ()
+(defun spacemacs//ts-setup-tide ()
   "Setup tide backend."
   (progn
     (evilified-state-evilify tide-references-mode tide-references-mode-map
@@ -42,7 +42,7 @@
       (kbd "C-l") 'tide-goto-reference)
     (tide-setup)))
 
-(defun spacemacs//typescript-setup-tide-company ()
+(defun spacemacs//ts-setup-tide-company ()
   "Setup tide auto-completion."
   (spacemacs|add-company-backends
     :backends company-tide
@@ -51,21 +51,21 @@
     company-minimum-prefix-length 2)
   (company-mode))
 
-(defun spacemacs//typescript-setup-tide-eldoc ()
+(defun spacemacs//ts-setup-tide-eldoc ()
   "Setup eldoc for tide."
   (eldoc-mode))
 
 
 ;; lsp
 
-(defun spacemacs//typescript-setup-lsp ()
+(defun spacemacs//ts-setup-lsp ()
   "Setup lsp backend."
   (if (configuration-layer/layer-used-p 'lsp)
       (lsp)
     (message (concat "`lsp' layer is not installed, "
                      "please add `lsp' layer to your dotfile."))))
 
-(defun spacemacs//typescript-setup-lsp-company ()
+(defun spacemacs//ts-setup-lsp-company ()
   "Setup lsp auto-completion."
   (if (configuration-layer/layer-used-p 'lsp)
       (progn
@@ -80,14 +80,14 @@
     (message (concat "`lsp' layer is not installed, "
                      "please add `lsp' layer to your dotfile."))))
 
-(defun spacemacs//typescript-setup-lsp-eldoc ()
+(defun spacemacs//ts-setup-lsp-eldoc ()
   "Setup eldoc for LSP."
   (eldoc-mode))
 
 
 ;; Others
 
-(defun spacemacs/typescript-tsfmt-format-buffer ()
+(defun spacemacs/ts-tsfmt-format-buffer ()
   "Format buffer with tsfmt."
   (interactive)
   (if (executable-find "tsfmt")
@@ -118,26 +118,26 @@
                   (display-buffer outputbuf)))
               (progn
                 (delete-file tmpfile)))))
-    (error "tsfmt not found. Run \"npm install -g typescript-formatter\"")))
+    (error "tsfmt not found. Run \"npm install -g ts-formatter\"")))
 
-(defun spacemacs/typescript-format ()
-  "Call formatting tool specified in `typescript-fmt-tool'."
+(defun spacemacs/ts-format ()
+  "Call formatting tool specified in `ts-fmt-tool'."
   (interactive)
   (cond
-   ((eq typescript-fmt-tool 'typescript-formatter)
-    (call-interactively 'spacemacs/typescript-tsfmt-format-buffer))
-   ((eq typescript-fmt-tool 'tide)
+   ((eq ts-fmt-tool 'ts-formatter)
+    (call-interactively 'spacemacs/ts-tsfmt-format-buffer))
+   ((eq ts-fmt-tool 'tide)
     (call-interactively 'tide-format))
-   ((eq typescript-fmt-tool 'prettier)
+   ((eq ts-fmt-tool 'prettier)
     (call-interactively 'prettier-js))
-   (t (error (concat "%s isn't valid typescript-fmt-tool value."
-                     " It should be 'tide, 'typescript-formatter or 'prettier."
-                     (symbol-name typescript-fmt-tool))))))
+   (t (error (concat "%s isn't valid ts-fmt-tool value."
+                     " It should be 'tide, 'ts-formatter or 'prettier."
+                     (symbol-name ts-fmt-tool))))))
 
-(defun spacemacs/typescript-fmt-before-save-hook ()
-  (add-hook 'before-save-hook 'spacemacs/typescript-format t t))
+(defun spacemacs/ts-fmt-before-save-hook ()
+  (add-hook 'before-save-hook 'spacemacs/ts-format t t))
 
-(defun spacemacs/typescript-open-region-in-playground (start end)
+(defun spacemacs/ts-open-region-in-playground (start end)
   "Open selected region in http://www.typescriptlang.org/Playground
                  If nothing is selected - open the whole current buffer."
   (interactive (if (use-region-p)
@@ -146,9 +146,9 @@
   (browse-url (concat "http://www.typescriptlang.org/Playground#src="
                       (url-hexify-string (buffer-substring-no-properties start end)))))
 
-(defun spacemacs/typescript-yasnippet-setup ()
+(defun spacemacs/ts-yasnippet-setup ()
   (yas-activate-extra-mode 'js-mode))
 
-(defun spacemacs/typescript-jump-to-type-def ()
+(defun spacemacs/ts-jump-to-type-def ()
   (interactive)
   (tide-jump-to-definition))
