@@ -19,6 +19,11 @@
 * Description
 This layer adds support for TypeScript and TSX editing.
 
+Sync with upstream, removed javscript layer from dependency
+
+namespace
+typescript -> ts 
+
 ** Features:
 - Multiple backends support: Tide and LSP
 - Eldoc-mode
